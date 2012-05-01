@@ -1,0 +1,18 @@
+
+.modalDialog .dialogTitleLabel {
+  font: bold 1.3333em arial,sans-serif; /* 16/12 */
+  color: #2C5195;
+}
+
+.modalDialog .dialogTitleDivider {
+  background-color: #B5B3B3;
+}
+
+.modalDialog .dialogLabel {
+  font: bold 1em arial,sans-serif;
+  color: #797979;
+}
+
+.modalDialog .rightAlignText {
+  text-align: right;
+}
