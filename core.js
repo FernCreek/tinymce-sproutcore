@@ -216,10 +216,10 @@ tinymce.init({
   theme: 'advanced',
   inline_styles: false,
   // Load our plugins, but ensure that TinyMCE does not try to load the JS files for them.
-  plugins: '-contextmenu,-paste,-table,-seapine,-sproutcore,-seapine_sproutcore',
+  plugins: '-paste,-table,-seapine,-sproutcore,-seapine_sproutcore',
 
   theme_advanced_buttons1: '', // buttons are set in setup, depending on type of editor
-  theme_advanced_buttons2: '',
+  theme_advanced_buttons2: 'pastetext,removeformat,tablecontrols,delete_table',
   theme_advanced_buttons3: '',
   theme_advanced_toolbar_location: 'top',
   theme_advanced_toolbar_align: 'left',
