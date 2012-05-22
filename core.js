@@ -28,7 +28,25 @@ TinySC = SC.Object.create({
    *
    * @property {Object}
    */
-  views: {}
+  views: {},
+
+  /**
+   * Set the app specific functions that should be used by TinySC to open and close dialogs.
+   * @param {String} appName Name of the application object.
+   * @param {String} dialogOpen Name of the dialog opening function, within the application namespace.
+   * @param {String} dialogClose Name of the dialog closing function within the application namespace.
+   */
+  setDialogFunctions: function(appName, dialogOpen, dialogClose) {
+    var s = tinymce.settings;
+
+    if (s) {
+      tinymce.extend(s, {
+        sproutcore_app_namespace: appName,
+        sproutcore_dialog_open: dialogOpen,
+        sproutcore_dialog_close: dialogClose
+      });
+    }
+  }
 });
 
 /** @namespace
@@ -97,6 +115,18 @@ TinySC.Callbacks = {
  * TinyMCE related utility functions.
  */
 TinySC.Utils = {
+
+  /**
+   * Closes a dialog according the app specified method.
+   *
+   * @param {tinymce.Editor} ed Editor instance.
+   * @param {SC.PanelPane} view The dialog to close.
+   */
+  closeDialog: function(ed, view) {
+    if (ed.plugins.sproutcore) {
+      ed.plugins.sproutcore.closeDialog(ed, view);
+    }
+  },
 
   /**
    * Gets the WysiwygView that owns the TinyMCE editor.

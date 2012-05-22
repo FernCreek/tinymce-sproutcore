@@ -175,8 +175,17 @@ TinySC.InsertLinkPane = SC.PanelPane.extend({
    * Closes the dialog.
    */
   close: function() {
-    // TODO: integrate this into the app's pane system
-    this.remove();
+    var owner = this.get('owner'),
+        ed;
+
+    if (owner) {
+      ed = owner.get('editor');
+    }
+
+    if (ed) {
+      TinySC.Utils.closeDialog(ed, this);
+    }
+
     TinySC.insertLinkController.clear();
   }
 });
