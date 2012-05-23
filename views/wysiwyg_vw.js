@@ -41,13 +41,23 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
    * @property {String}
    */
   value: function(key, value) {
-    var ed;
     if (value !== undefined) {
       this._value = value;
       this.load(value);
     }
     return this._value;
   }.property().cacheable(),
+
+  /**
+   * Is the editor dirty.
+   * A dirty editor means that the user has made a change to the editor.
+   *
+   * @property {Boolean}
+   */
+  isDirty: function() {
+    var ed = this.get('editor');
+    return ed ? ed.isDirty() : NO;
+  }.property(),
 
   /**
    * Loads the value into the TinyMCE editor.
