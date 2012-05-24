@@ -42,7 +42,6 @@ TinySC.insertImageController = SC.Object.create(SC.DelegateSupport, TinySC.Inser
   clear: function() {
     this.beginPropertyChanges()
       .set('insertMode', YES)
-      .set('bookmark', null)
       .set('node', null)
       .set('fileSelected', NO)
       .set('uploadInProgress', NO)
@@ -63,13 +62,6 @@ TinySC.insertImageController = SC.Object.create(SC.DelegateSupport, TinySC.Inser
    * @property {Boolean}
    */
   insertMode: YES,
-
-  /**
-   * Selection bookmark.
-   *
-   * @property {Object}
-   */
-  bookmark: null,
 
   /**
    * Selected node.

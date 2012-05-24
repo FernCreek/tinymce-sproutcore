@@ -33,7 +33,6 @@ TinySC.insertLinkController = SC.Object.create({
   clear: function() {
     this.beginPropertyChanges()
       .set('insertMode', YES)
-      .set('bookmark', null)
       .set('selectedUrlType', 'ttstudio://')
       .set('url', 'ttstudio://')
       .set('displayText', '')
@@ -66,13 +65,6 @@ TinySC.insertLinkController = SC.Object.create({
    * @property {Boolean}
    */
   insertMode: YES,
-
-  /**
-   * Selection bookmark.
-   *
-   * @property {Object}
-   */
-  bookmark: null,
 
   /**
    * Valid URL types.

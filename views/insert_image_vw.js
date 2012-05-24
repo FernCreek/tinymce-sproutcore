@@ -297,7 +297,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
     node = TinySC.insertImageController.get('node');
 
     if (ed) {
-      TinySC.Utils.restoreSelection(ed, TinySC.insertImageController.get('bookmark'));
+      ed.makeReadOnly(false);
 
       imgHTML = ed.dom.createHTML('img', {
         src: TinySC.insertImageController.getImgSrc(TinySC.insertImageController.get('serverFileID')),

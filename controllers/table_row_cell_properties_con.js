@@ -25,7 +25,6 @@ TinySC.tableRowCellPropertiesController = SC.Object.create({
   clear: function() {
     this.beginPropertyChanges()
       .set('rowMode', YES)
-      .set('bookmark', null)
       .set('horizontalAlignment', 'left')
       .set('verticalAlignment', 'middle')
       .set('backgroundColor', '#ffffff')
@@ -38,13 +37,6 @@ TinySC.tableRowCellPropertiesController = SC.Object.create({
    * @property {Boolean}
    */
   rowMode: YES,
-
-  /**
-   * Selection bookmark.
-   *
-   * @property {Object}
-   */
-  bookmark: null,
 
   /**
    * Horizontal cell alignment.

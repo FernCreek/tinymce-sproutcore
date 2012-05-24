@@ -140,7 +140,7 @@ TinySC.InsertLinkPane = SC.PanelPane.extend({
     }
 
     if (ed) {
-      TinySC.Utils.restoreSelection(ed, TinySC.insertLinkController.get('bookmark'));
+      ed.makeReadOnly(false);
 
       ed.execCommand('mceInsertLink', false, {
         href: 'tinysc-link',

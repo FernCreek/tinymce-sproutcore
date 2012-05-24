@@ -139,32 +139,6 @@ TinySC.Utils = {
   },
 
   /**
-   * Stores the editor's selection so it can be restored later.
-   * On IE, interacting with one of the dialogs will clear the
-   * selection. We need to store it when the dialog opens,
-   * and restore it before inserting the dialog's content.
-   *
-   * @param {tinymce.Editor} ed Editor instance.
-   * @returns {Object} Selection bookmark.
-   */
-  storeSelection: function(ed) {
-    return ed.selection.getBookmark(1);
-  },
-
-  /**
-   * Restores the editor's selection.
-   *
-   * @see TinySC.Utils.storeSelection
-   * @param {tinymce.Editor} ed Editor instance.
-   * @param {Object} bookmark Selection bookmark.
-   */
-  restoreSelection: function(ed, bookmark) {
-    if (bookmark) {
-      ed.selection.moveToBookmark(bookmark);
-    }
-  },
-
-  /**
    * Finds the closest parent anchor node of the element,
    * which could be the element itself.
    *

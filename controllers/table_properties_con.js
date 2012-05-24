@@ -25,7 +25,6 @@ TinySC.tablePropertiesController = SC.Object.create({
   clear: function() {
     this.beginPropertyChanges()
       .set('insertMode', YES)
-      .set('bookmark', null)
       .set('node', null)
       .set('rows', 2)
       .set('columns', 2)
@@ -45,13 +44,6 @@ TinySC.tablePropertiesController = SC.Object.create({
    * @property {Boolean}
    */
   insertMode: YES,
-
-  /**
-   * Selection bookmark.
-   *
-   * @property {Object}
-   */
-  bookmark: null,
 
   /**
    * Selected node.
