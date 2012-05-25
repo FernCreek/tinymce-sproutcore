@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// File: table_properties_con.js
+// File: tableProperties_con.js
 //
 // Description:
 //   Controller for the Table Properties dialog.

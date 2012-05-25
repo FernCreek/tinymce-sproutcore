@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// File: insert_image_con.js
+// File: insertImage_con.js
 //
 // Description:
 //   Controller for the Insert Image dialog.
@@ -10,7 +10,7 @@
 //////////////////////////////////////////////////////////////////////////
 /*globals TinySC */
 
-sc_require('protocols/insert_image_delegate');
+sc_require('protocols/image_del');
 
 /**
  * @class
@@ -21,7 +21,7 @@ sc_require('protocols/insert_image_delegate');
  * @extends SC.DelegateSupport
  * @extends TinySC.InsertImageDelegate
  */
-TinySC.insertImageController = SC.Object.create(SC.DelegateSupport, TinySC.InsertImageDelegate, {
+TinySC.insertImageController = SC.Object.create(SC.DelegateSupport, TinySC.ImageDelegate, {
 
   /**
    * Initializes the controller.
@@ -73,7 +73,7 @@ TinySC.insertImageController = SC.Object.create(SC.DelegateSupport, TinySC.Inser
   /**
    * Insert image delegate.
    *
-   * @property {TinySC.InsertImageDelegate}
+   * @property {TinySC.ImageDelegate}
    */
   delegate: null,
 

@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// File: insert_image_delegate.js
+// File: image_del.js
 //
 // Description:
 //   Delegate for image upload functionality.
@@ -15,21 +15,25 @@
  * Delegate for image upload functionality.
  * You should create an object that implements these methods.
  */
-TinySC.InsertImageDelegate = {
+TinySC.ImageDelegate = {
 
   /**
    * Invoked when image upload is complete.
    *
    * @param {Object} result The result from the server.
    */
-  imageUploadComplete: function(result) {},
+  imageUploadComplete: function(result) {
+    return result;
+  },
 
   /**
    * Invoked to get the image src string to insert into the editor.
    *
    * @param {String} serverFileID Server file ID token
    */
-  getImageSource: function(serverFileID) {},
+  getImageSource: function(serverFileID) {
+    return '';
+  },
 
   /**
    * Specifies the action attribute for the image upload form.

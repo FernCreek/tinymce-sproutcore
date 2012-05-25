@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// File: table_row_cell_properties_vw.js
+// File: tableRowCellProperties_vw.js
 //
 // Description:
 //   Table Row/Cell Properties dialog.

@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// File: table_row_cell_properties_con.js
+// File: tableRowCellProperties_con.js
 //
 // Description:
 //   Controller for the Table Row/Cell Properties dialog.

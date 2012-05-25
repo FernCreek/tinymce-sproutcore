@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// File: insert_link_con.js
+// File: insertLink_con.js
 //
 // Description:
 //   Controller for the Insert Link dialog.
