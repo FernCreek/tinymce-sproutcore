@@ -27,7 +27,7 @@ TinySC.tableRowCellPropertiesController = SC.Object.create({
       .set('rowMode', YES)
       .set('horizontalAlignment', 'left')
       .set('verticalAlignment', 'middle')
-      .set('backgroundColor', '#ffffff')
+      .set('backgroundColor', '#FFFFFF')
     .endPropertyChanges();
   },
 
@@ -61,5 +61,5 @@ TinySC.tableRowCellPropertiesController = SC.Object.create({
    *
    * @property {String}
    */
-  backgroundColor: '#ffffff'
+  backgroundColor: '#FFFFFF'
 });

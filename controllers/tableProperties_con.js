@@ -34,7 +34,7 @@ TinySC.tablePropertiesController = SC.Object.create({
       .set('frame', 'on')
       .set('frameWidth', 1)
       .set('alignment', 'left')
-      .set('backgroundColor', '#ffffff')
+      .set('backgroundColor', '#FFFFFF')
     .endPropertyChanges();
   },
 
@@ -117,5 +117,5 @@ TinySC.tablePropertiesController = SC.Object.create({
    *
    * @property {String}
    */
-  backgroundColor: '#ffffff'
+  backgroundColor: '#FFFFFF'
 });
