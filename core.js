@@ -69,6 +69,93 @@ TinySC.Callbacks = {
   },
 
   /**
+   * Handles moving focus either to the toolbar or to the next control.
+   *
+   * @param {tinymce.Editor} ed Editor instance.
+   * @param {KeyEvent} evt Keydown (keypress on firefox) event.
+   */
+  moveFocus: function(ed, evt) {
+    var handled = NO,
+        view,
+        nextValidKeyView,
+        $buttons,
+        $button,
+        idx,
+        foundButton = NO;
+
+    if (evt.which === 9 || evt.keyCode === 9) {
+      view = TinySC.Utils.getOwnerView(ed);
+      if (view) {
+        if (evt.shiftKey) {
+          $buttons = view.$toolbarButtons();
+          $buttons.removeAttr('data-tinysc-focus');
+          idx = $buttons.length;
+          while (idx > 0 && !foundButton) {
+            --idx;
+            $button = $buttons.eq(idx);
+            if ($button.attr('aria-disabled') !== 'true') {
+              foundButton = YES;
+            }
+          }
+
+          if (foundButton) {
+            $button.attr('data-tinysc-focus', 'true');
+            $button.closest('.mceToolbar')[0].focus();
+            $button[0].focus();
+            handled = YES;
+          }
+        } else if (evt.ctrlKey) {
+          nextValidKeyView = view.get('nextValidKeyView');
+          if (nextValidKeyView) {
+            nextValidKeyView.$().attr('tabindex', '0');
+            nextValidKeyView.$()[0].focus();
+            nextValidKeyView.becomeFirstResponder();
+            nextValidKeyView.$().attr('tabindex', '-1');
+            handled = YES;
+          }
+        }
+      }
+    }
+
+    if (handled) {
+      tinymce.dom.Event.cancel(evt);
+    }
+  },
+
+  /**
+   * Catches the focus event on the editor iframe window and, if the WYSIWYG control is not
+   * firstResponder, moves focus and firstResponder status to the first keyView on the keyPane.
+   *
+   * @param {tinymce.Editor} ed Editor instance.
+   * @param {FocusEvent} evt Focus event.
+   */
+  preventBrowserFocus: function(ed, evt) {
+    var view = TinySC.Utils.getOwnerView(ed),
+        keyPane,
+        nextValidKeyView;
+
+    if (!view.get('isFirstResponder')) {
+      keyPane = SC.RootResponder.responder.get('keyPane');
+      if (keyPane) {
+        nextValidKeyView = keyPane.get('nextValidKeyView');
+        if (nextValidKeyView) {
+          setTimeout(function() {
+            var $view = nextValidKeyView.$();
+            if ($view.length) {
+              // In order to get focus to move properly, we need to
+              // set the tabindex, then focus. Afterwards, we can reset the tabindex.
+              $view.attr('tabindex', '0');
+              $view[0].focus();
+              nextValidKeyView.becomeFirstResponder();
+              $view.attr('tabindex', '-1');
+            }
+          }, 1);
+        }
+      }
+    }
+  },
+
+  /**
    * Called on key down. If the key pressed was tab, 4 spaces will be inserted
    * into the TinyMCE editor.
    *
@@ -79,6 +166,20 @@ TinySC.Callbacks = {
     if (evt.keyCode === 9 && !evt.shiftKey && !evt.ctrlKey) {
       ed.execCommand('mceInsertContent', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
       tinymce.dom.Event.cancel(evt);
+    }
+  },
+
+  /**
+   * Gives the WYSIWYG control firstResponder status when clicked.
+   *
+   * @param {tinymce.Editor} ed Editor instance.
+   * @param {MouseEvent} evt Mousedown event.
+   */
+  handleClickFocus: function(ed, evt) {
+    var view = TinySC.Utils.getOwnerView(ed);
+    if (view) {
+      view.$toolbarButtons().removeAttr('data-tinysc-focus');
+      view.becomeFirstResponder();
     }
   },
 
@@ -246,7 +347,8 @@ tinymce.init({
   setup: function(ed) {
     var view = TinySC.Utils.getOwnerView(ed),
         normalEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,expanded_editor,code',
-        expandedEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,code';
+        expandedEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,code',
+        onKey = (SC.browser.name === SC.BROWSER.firefox) ? ed.onKeyPress : ed.onKeyDown;
 
     // Handle settings the toolbar buttons depending on whether we are expanded or not.
     if (view && view.get('isExpanded')) {
@@ -263,14 +365,29 @@ tinymce.init({
       TinySC.Callbacks.contentChanged(ed);
     });
 
+    // Handle moving focus out of the editor when the ctrl-tab key is pressed.
+    onKey.add(TinySC.Callbacks.moveFocus);
     // Handle inserting a 'tab' (4x &nbsp;) when the tab key is pressed.
     // This will override tab focus.
-    ed.onKeyDown.add(TinySC.Callbacks.insertTab);
+    onKey.add(TinySC.Callbacks.insertTab);
+
+    // Handle giving the WYSIWYG control firstResponder
+    // status when the editor area is clicked.
+    ed.onMouseDown.add(TinySC.Callbacks.handleClickFocus);
 
     // Handle activating links when double clicking on them.
     ed.onDblClick.add(TinySC.Callbacks.activateLink);
 
     // Handle cleaning the content.
     ed.onPreProcess.add(TinySC.Callbacks.clean);
+
+    // HACK: The browser natively gives the editor area focus at incorrect times.
+    // This is in place to force focus to the first control in the focus chain
+    // if the editor area gets focus while the WYSIWYG control is not firstResponder.
+    ed.onInit.add(function(ed, evt) {
+      tinymce.dom.Event.add(ed.getWin(), 'focus', function(evt) {
+        TinySC.Callbacks.preventBrowserFocus(ed, evt);
+      });
+    });
   }
 });

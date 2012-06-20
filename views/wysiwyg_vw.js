@@ -115,13 +115,43 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
     return tinymce.get(this.get('editorID'));
   }.property('editorID').cacheable(),
 
+  /** @private */
+  acceptsFirstResponder: function() {
+    if (SC.FOCUS_ALL_CONTROLS) { return this.get('isEnabled'); }
+    return NO;
+  }.property('isEnabled'),
+
   /**
    * Gets the textarea element backing the editor.
    *
    * @returns {jQuery} The textarea element.
+   *
+   * @private
    */
   $textarea: function() {
     return this.$('textarea');
+  },
+
+  /**
+   * Gets the TinyMCE editor's toolbar.
+   *
+   * @returns {jQuery} TinyMCE toolbar.
+   *
+   * @private
+   */
+  $toolbar: function() {
+    return this.$('#%@_toolbargroup'.fmt(this.get('editorID')));
+  },
+
+  /**
+   * Gets the TinyMCE editor's toolbar buttons.
+   *
+   * @returns {jQuery} TinyMCE toolbar buttons.
+   *
+   * @private
+   */
+  $toolbarButtons: function() {
+    return this.$('#%@_toolbargroup a'.fmt(this.get('editorID')));
   },
 
   /**
@@ -183,5 +213,101 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
    */
   willDestroyLayer: function() {
     tinymce.execCommand('mceRemoveControl', false, this.get('editorID'));
+  },
+
+  /**
+   * Handle moving focus around the control. Since the editor has an iframe,
+   * this only handles events that happen outside of the iframe. A tinymce
+   * event handler handles the other half of the work.
+   *
+   * @param {KeyboardEvent} evt Keydown event.
+   *
+   * @see TinySC.Callbacks.moveFocus
+   */
+  keyDown: function(evt) {
+    var handled = NO,
+        ed,
+        curIdx = -1,
+        newIdx,
+        foundNextButton = NO,
+        $buttons,
+        $button,
+        nextValidKeyView;
+
+    if (evt.which === 9 || evt.keyCode === 9) {
+      $buttons = this.$toolbarButtons();
+      if ($buttons.length) {
+        $buttons.each(function(index) {
+          if ($(this).attr('data-tinysc-focus') === 'true') {
+            curIdx = index;
+            return false;
+          }
+        });
+
+        if (curIdx > -1) {
+          $buttons.eq(curIdx).removeAttr('data-tinysc-focus');
+          newIdx = curIdx;
+          do {
+            newIdx += evt.shiftKey ? -1 : 1;
+            $button = $buttons.eq(newIdx);
+
+            if (newIdx >= 0 && newIdx < $buttons.length && $button.attr('aria-disabled') !== 'true') {
+              foundNextButton = YES;
+            }
+          } while ((evt.shiftKey ? newIdx > 0 : newIdx < $buttons.length - 1) && !foundNextButton);
+
+          if (foundNextButton) {
+            $button.attr('data-tinysc-focus', 'true');
+            $button[0].focus();
+            handled = YES;
+          }
+        }
+      }
+
+      if (!handled) {
+        if (evt.shiftKey) {
+          nextValidKeyView = this.get('previousValidKeyView');
+          if (nextValidKeyView) {
+            nextValidKeyView.becomeFirstResponder();
+            handled = YES;
+          }
+        } else {
+          ed = this.get('editor');
+          if (ed) {
+            ed.focus();
+            handled = YES;
+          }
+        }
+      }
+    }
+
+    return handled;
+  },
+
+  /**
+   * Handles setting initial focus when this control becomes the firstResponder.
+   *
+   * @param {SC.Responder} responder The responder that changed.
+   */
+  didBecomeFirstResponder: function(responder) {
+    var $buttons = this.$toolbarButtons(),
+        $button = $buttons.filter(':first');
+
+    $buttons.removeAttr('data-tinysc-focus');
+
+    if ($button.length) {
+      $button.attr('data-tinysc-focus', 'true');
+      $button[0].focus();
+    }
+  },
+
+  /**
+   * Handles clearing focus when this control loses firstResponder status.
+   *
+   * @param {SC.Responder} responder The responder that is about to change.
+   */
+  willLoseFirstResponder: function(responder) {
+    var $buttons = this.$toolbarButtons();
+    $buttons.removeAttr('data-tinysc-focus');
   }
 });
