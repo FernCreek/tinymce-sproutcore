@@ -30,12 +30,11 @@ TinySC.ExpandedEditorPane = SC.PanelPane.extend({
    */
   owner: null,
 
-  /**
-   * Expanded editor wysiwyg view.
-   *
-   * @property {TinySC.WysiwygView}
-   */
+  /** @private */
   wysiwygView: SC.outlet('contentView.wysiwygView'),
+
+  /** @private */
+  titleLabel: SC.outlet('contentView.titleBar.titleLabel'),
 
   contentView: SC.View.extend({
     layout: { left: 0, right: 0, top: 0, bottom: 0 },
@@ -89,10 +88,14 @@ TinySC.ExpandedEditorPane = SC.PanelPane.extend({
    */
   load: function() {
     var owner = this.get('owner'),
-        wysiwygView = this.get('wysiwygView');
+        wysiwygView = this.get('wysiwygView'),
+        titleLabel = this.get('titleLabel'),
+        title;
 
-    if (owner && wysiwygView) {
+    if (owner && wysiwygView && titleLabel) {
       wysiwygView.set('value', owner.get('value'));
+      title = owner.get('expandedEditorTitle');
+      titleLabel.set('value', title ? title : 'Expanded Editor');
     }
   },
 

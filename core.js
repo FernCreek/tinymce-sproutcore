@@ -220,7 +220,7 @@ tinymce.init({
   theme: 'advanced',
   inline_styles: false,
   // Load our plugins, but ensure that TinyMCE does not try to load the JS files for them.
-  plugins: '-paste,-table,-seapine,-sproutcore,-seapine_sproutcore',
+  plugins: '-paste,-table,-seapine,-sproutcore',
 
   theme_advanced_buttons1: '', // buttons are set in setup, depending on type of editor
   theme_advanced_buttons2: 'pastetext,removeformat,tablecontrols,delete_table',
@@ -245,8 +245,8 @@ tinymce.init({
    */
   setup: function(ed) {
     var view = TinySC.Utils.getOwnerView(ed),
-        normalEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,spellcheck,expanded_editor,|,code',
-        expandedEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,spellcheck,|,code';
+        normalEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,expanded_editor,code',
+        expandedEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,code';
 
     // Handle settings the toolbar buttons depending on whether we are expanded or not.
     if (view && view.get('isExpanded')) {

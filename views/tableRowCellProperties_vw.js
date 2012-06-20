@@ -131,9 +131,8 @@ TinySC.TableRowCellPropertiesPane = SC.PanelPane.extend({
         value: 'Background Color'
       }),
 
-      // TODO: color picker
-      backgroundColorPicker: SC.TextFieldView.extend({
-        layout: { width: 80, height: 20, left: 120, top: 30 },
+      backgroundColorPicker: TinySC.BackgroundColorSelector.extend({
+        layout: { width: 215, left: 120, top: 30 },
         valueBinding: 'TinySC.tableRowCellPropertiesController.backgroundColor'
       })
     }),

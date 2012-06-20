@@ -29,6 +29,13 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
   isExpanded: NO,
 
   /**
+   * The title to use for the expanded editor.
+   *
+   * @property {String}
+   */
+  expandedEditorTitle: null,
+
+  /**
    * Paste delegate object.
    *
    * @property {TinySC.PasteDelegate}

@@ -18,7 +18,7 @@
  * @extends SC.PanelPane
  */
 TinySC.TablePropertiesPane = SC.PanelPane.extend({
-  layout: { width: 500, height: 300, centerX: 0, centerY: 0 },
+  layout: { width: 500, height: 170, centerX: 0, centerY: 0 },
   classNames: 'modalDialog'.w(),
 
   /**
@@ -92,150 +92,154 @@ TinySC.TablePropertiesPane = SC.PanelPane.extend({
       })
     }),
 
-    tableOptionsView: SC.View.extend({
+    tableOptionsView: SP.ProgressiveDisclosureView.extend({
       layout: { left: 20, right: 20, top: 100 },
-      childViews: ['widthLabel', 'widthValueTextField', 'widthUnitLabel', 'cellPaddingLabel',
-        'cellPaddingValueTextField', 'cellPaddingUnitLabel', 'cellSpacingLabel', 'cellSpacingValueTextField',
-        'cellSpacingUnitLabel', 'frameLabel', 'frameButton', 'frameWidthLabel', 'frameWidthValueTextField',
-        'frameWidthUnitLabel', 'alignmentLabel', 'alignmentButton', 'backgroundColorLabel', 'backgroundColorPicker'],
+      title: 'Table Options',
 
-      widthLabel: SC.LabelView.extend({
-        layout: { width: 110, height: 20, left: 0, top: 0 },
-        classNames: 'dialogLabel rightAlignText'.w(),
-        value: 'Width'
-      }),
+      contentView: SC.View.extend({
+        layout: { height: 150, top: 10 },
+        childViews: ['widthLabel', 'widthValueTextField', 'widthUnitLabel', 'cellPaddingLabel',
+          'cellPaddingValueTextField', 'cellPaddingUnitLabel', 'cellSpacingLabel', 'cellSpacingValueTextField',
+          'cellSpacingUnitLabel', 'frameLabel', 'frameButton', 'frameWidthLabel', 'frameWidthValueTextField',
+          'frameWidthUnitLabel', 'alignmentLabel', 'alignmentButton', 'backgroundColorLabel', 'backgroundColorPicker'],
 
-      widthValueTextField: SC.TextFieldView.extend({
-        layout: { width: 50, height: 20, left: 120, top: 0 },
-        valueBinding: 'TinySC.tablePropertiesController.width'
-      }),
+        widthLabel: SC.LabelView.extend({
+          layout: { width: 110, height: 20, left: 0, top: 0 },
+          classNames: 'dialogLabel rightAlignText'.w(),
+          value: 'Width'
+        }),
 
-      widthUnitLabel: SC.LabelView.extend({
-        layout: { width: 50, height: 20, left: 175, top: 0 },
-        classNames: 'dialogLabel'.w(),
-        value: 'pixels'
-      }),
+        widthValueTextField: SC.TextFieldView.extend({
+          layout: { width: 50, height: 20, left: 120, top: 0 },
+          valueBinding: 'TinySC.tablePropertiesController.width'
+        }),
 
-      cellPaddingLabel: SC.LabelView.extend({
-        layout: { width: 110, height: 20, left: 0, top: 30 },
-        classNames: 'dialogLabel rightAlignText'.w(),
-        value: 'Cell Padding'
-      }),
+        widthUnitLabel: SC.LabelView.extend({
+          layout: { width: 50, height: 20, left: 175, top: 0 },
+          classNames: 'dialogLabel'.w(),
+          value: 'pixels'
+        }),
 
-      cellPaddingValueTextField: SC.TextFieldView.extend({
-        layout: { width: 50, height: 20, left: 120, top: 30 },
-        valueBinding: 'TinySC.tablePropertiesController.cellPadding'
-      }),
+        cellPaddingLabel: SC.LabelView.extend({
+          layout: { width: 110, height: 20, left: 0, top: 30 },
+          classNames: 'dialogLabel rightAlignText'.w(),
+          value: 'Cell Padding'
+        }),
 
-      cellPaddingUnitLabel: SC.LabelView.extend({
-        layout: { width: 50, height: 20, left: 175, top: 30 },
-        classNames: 'dialogLabel'.w(),
-        value: 'pixels'
-      }),
+        cellPaddingValueTextField: SC.TextFieldView.extend({
+          layout: { width: 50, height: 20, left: 120, top: 30 },
+          valueBinding: 'TinySC.tablePropertiesController.cellPadding'
+        }),
 
-      cellSpacingLabel: SC.LabelView.extend({
-        layout: { width: 80, height: 20, left: 250, top: 30 },
-        classNames: 'dialogLabel rightAlignText'.w(),
-        value: 'Cell Spacing'
-      }),
+        cellPaddingUnitLabel: SC.LabelView.extend({
+          layout: { width: 50, height: 20, left: 175, top: 30 },
+          classNames: 'dialogLabel'.w(),
+          value: 'pixels'
+        }),
 
-      cellSpacingValueTextField: SC.TextFieldView.extend({
-        layout: { width: 50, height: 20, left: 340, top: 30 },
-        valueBinding: 'TinySC.tablePropertiesController.cellSpacing'
-      }),
+        cellSpacingLabel: SC.LabelView.extend({
+          layout: { width: 80, height: 20, left: 250, top: 30 },
+          classNames: 'dialogLabel rightAlignText'.w(),
+          value: 'Cell Spacing'
+        }),
 
-      cellSpacingUnitLabel: SC.LabelView.extend({
-        layout: { width: 50, height: 20, left: 395, top: 30 },
-        classNames: 'dialogLabel'.w(),
-        value: 'pixels'
-      }),
+        cellSpacingValueTextField: SC.TextFieldView.extend({
+          layout: { width: 50, height: 20, left: 340, top: 30 },
+          valueBinding: 'TinySC.tablePropertiesController.cellSpacing'
+        }),
 
-      frameLabel: SC.LabelView.extend({
-        layout: { width: 110, height: 20, left: 0, top: 60 },
-        classNames: 'dialogLabel rightAlignText'.w(),
-        value: 'Frame'
-      }),
+        cellSpacingUnitLabel: SC.LabelView.extend({
+          layout: { width: 50, height: 20, left: 395, top: 30 },
+          classNames: 'dialogLabel'.w(),
+          value: 'pixels'
+        }),
 
-      frameButton: SC.SegmentedView.extend({
-        layout: { width: 80, height: 20, left: 120, top: 60 },
-        align: SC.ALIGN_LEFT,
-        itemIconKey: 'icon',
-        itemValueKey: 'value',
-        valueBinding: 'TinySC.tablePropertiesController.frame',
-        // TODO: Update icons.
-        items: [
-          {
-            icon: '/ttweb/images/btn_table_frame_on.gif',
-            value: 'on'
-          },
-          {
-            icon: '/ttweb/images/btn_table_frame_off.gif',
-            value: 'off'
-          }
-        ]
-      }),
+        frameLabel: SC.LabelView.extend({
+          layout: { width: 110, height: 20, left: 0, top: 60 },
+          classNames: 'dialogLabel rightAlignText'.w(),
+          value: 'Frame'
+        }),
 
-      frameWidthLabel: SC.LabelView.extend({
-        layout: { width: 80, height: 20, left: 250, top: 60 },
-        classNames: 'dialogLabel rightAlignText'.w(),
-        value: 'Width'
-      }),
+        frameButton: SC.SegmentedView.extend({
+          layout: { width: 80, height: 20, left: 120, top: 60 },
+          align: SC.ALIGN_LEFT,
+          itemIconKey: 'icon',
+          itemValueKey: 'value',
+          valueBinding: 'TinySC.tablePropertiesController.frame',
+          // TODO: Update icons.
+          items: [
+            {
+              icon: '/ttweb/images/btn_table_frame_on.gif',
+              value: 'on'
+            },
+            {
+              icon: '/ttweb/images/btn_table_frame_off.gif',
+              value: 'off'
+            }
+          ]
+        }),
 
-      frameWidthValueTextField: SC.TextFieldView.extend({
-        layout: { width: 50, height: 20, left: 340, top: 60 },
-        valueBinding: 'TinySC.tablePropertiesController.frameWidth'
-      }),
+        frameWidthLabel: SC.LabelView.extend({
+          layout: { width: 80, height: 20, left: 250, top: 60 },
+          classNames: 'dialogLabel rightAlignText'.w(),
+          value: 'Width'
+        }),
 
-      frameWidthUnitLabel: SC.LabelView.extend({
-        layout: { width: 50, height: 20, left: 395, top: 60 },
-        classNames: 'dialogLabel'.w(),
-        value: 'pixels'
-      }),
+        frameWidthValueTextField: SC.TextFieldView.extend({
+          layout: { width: 50, height: 20, left: 340, top: 60 },
+          valueBinding: 'TinySC.tablePropertiesController.frameWidth'
+        }),
 
-      alignmentLabel: SC.LabelView.extend({
-        layout: { width: 110, height: 20, left: 0, top: 90 },
-        classNames: 'dialogLabel rightAlignText'.w(),
-        value: 'Alignment'
-      }),
+        frameWidthUnitLabel: SC.LabelView.extend({
+          layout: { width: 50, height: 20, left: 395, top: 60 },
+          classNames: 'dialogLabel'.w(),
+          value: 'pixels'
+        }),
 
-      alignmentButton: SC.SegmentedView.extend({
-        layout: { width: 120, height: 20, left: 120, top: 90 },
-        align: SC.ALIGN_LEFT,
-        itemIconKey: 'icon',
-        itemValueKey: 'value',
-        valueBinding: 'TinySC.tablePropertiesController.alignment',
-        // TODO: Update icons.
-        items: [
-          {
-            icon: '/ttweb/images/btn_table_align_left.gif',
-            value: 'left'
-          },
-          {
-            icon: '/ttweb/images/btn_table_align_center.gif',
-            value: 'center'
-          },
-          {
-            icon: '/ttweb/images/btn_table_align_right.gif',
-            value: 'right'
-          }
-        ]
-      }),
+        alignmentLabel: SC.LabelView.extend({
+          layout: { width: 110, height: 20, left: 0, top: 90 },
+          classNames: 'dialogLabel rightAlignText'.w(),
+          value: 'Alignment'
+        }),
 
-      backgroundColorLabel: SC.LabelView.extend({
-        layout: { width: 110, height: 20, left: 0, top: 120 },
-        classNames: 'dialogLabel rightAlignText'.w(),
-        value: 'Background Color'
-      }),
+        alignmentButton: SC.SegmentedView.extend({
+          layout: { width: 120, height: 20, left: 120, top: 90 },
+          align: SC.ALIGN_LEFT,
+          itemIconKey: 'icon',
+          itemValueKey: 'value',
+          valueBinding: 'TinySC.tablePropertiesController.alignment',
+          // TODO: Update icons.
+          items: [
+            {
+              icon: '/ttweb/images/btn_table_align_left.gif',
+              value: 'left'
+            },
+            {
+              icon: '/ttweb/images/btn_table_align_center.gif',
+              value: 'center'
+            },
+            {
+              icon: '/ttweb/images/btn_table_align_right.gif',
+              value: 'right'
+            }
+          ]
+        }),
 
-      // TODO: color picker
-      backgroundColorPicker: SC.TextFieldView.extend({
-        layout: { width: 80, height: 20, left: 120, top: 120 },
-        valueBinding: 'TinySC.tablePropertiesController.backgroundColor'
+        backgroundColorLabel: SC.LabelView.extend({
+          layout: { width: 110, height: 20, left: 0, top: 120 },
+          classNames: 'dialogLabel rightAlignText'.w(),
+          value: 'Background Color'
+        }),
+
+        backgroundColorPicker: TinySC.BackgroundColorSelector.extend({
+          layout: { width: 215, left: 120, top: 120 },
+          valueBinding: 'TinySC.tablePropertiesController.backgroundColor'
+        })
       })
     }),
 
     saveButton: SC.ButtonView.extend({
-      layout: { width: 80, height: 24, top: 250, right: 110 },
+      layout: { width: 80, height: 24, bottom: 20, right: 110 },
       theme: 'capsule',
       isDefault: YES,
       action: 'save',
@@ -243,12 +247,34 @@ TinySC.TablePropertiesPane = SC.PanelPane.extend({
     }),
 
     cancelButton: SC.ButtonView.extend({
-      layout: { width: 80, height: 24, top: 250, right: 20 },
+      layout: { width: 80, height: 24, bottom: 20, right: 20 },
       theme: 'capsule',
       title: 'Cancel',
       action: 'cancel'
     })
   }),
+
+  /**
+   * Expands/collapses the dialog when the progressive disclosure control expands/collapses.
+   */
+  disclosureValueDidChange: function() {
+    var disclosureFrame = this.getPath('contentView.tableOptionsView.contentView.frame');
+
+    this.invokeLater(function() {
+      var value = this.getPath('contentView.tableOptionsView.value'),
+          frame = this.get('frame');
+
+      if (!disclosureFrame.height) {
+        disclosureFrame = this.getPath('contentView.tableOptionsView.contentView.frame');
+      }
+
+      if (value) {
+        this.adjust('height', frame.height + disclosureFrame.height);
+      } else {
+        this.adjust('height', frame.height - disclosureFrame.height);
+      }
+    });
+  }.observes('contentView.tableOptionsView.value'),
 
   /**
    * Saves the table properties to the editor and closes the dialog.

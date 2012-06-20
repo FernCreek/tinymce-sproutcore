@@ -18,7 +18,7 @@
  * @extends SC.PanelPane
  */
 TinySC.InsertImagePane = SC.PanelPane.extend({
-  layout: { width: 500, height: 350, centerX: 0, centerY: 0 },
+  layout: { width: 500, height: 324, centerX: 0, centerY: 0 },
   classNames: 'modalDialog'.w(),
 
   /**
@@ -122,7 +122,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
       }),
 
       widthValueLabel: SC.LabelView.extend({
-        layout: { width: 100, height: 20, left: 60, top: 50 },
+        layout: { width: 150, height: 20, left: 60, top: 50 },
         isVisibleBinding: 'TinySC.insertImageController.fileSelected',
         originalWidthBinding: 'TinySC.insertImageController.originalWidth',
         value: function() {
@@ -137,7 +137,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
       }),
 
       sizeValueLabel: SC.LabelView.extend({
-        layout: { width: 100, height: 20, left: 310, top: 50 },
+        layout: { height: 20, left: 310, right: 0, top: 50 },
         isVisibleBinding: 'TinySC.insertImageController.fileSelected',
         fileSizeBinding: 'TinySC.insertImageController.fileSize',
         value: function() {
@@ -152,7 +152,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
       }),
 
       heightValueLabel: SC.LabelView.extend({
-        layout: { width: 100, height: 20, left: 60, top: 80 },
+        layout: { width: 150, height: 20, left: 60, top: 80 },
         isVisibleBinding: 'TinySC.insertImageController.fileSelected',
         originalHeightBinding: 'TinySC.insertImageController.originalHeight',
         value: function() {
@@ -167,7 +167,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
       }),
 
       typeValueLabel: SC.LabelView.extend({
-        layout: { width: 100, height: 20, left: 310, top: 80 },
+        layout: { height: 20, left: 310, right: 0, top: 80 },
         isVisibleBinding: 'TinySC.insertImageController.fileSelected',
         valueBinding: 'TinySC.insertImageController.imageType'
       })
@@ -262,7 +262,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
     }),
 
     insertButton: SC.ButtonView.extend({
-      layout: { width: 80, height: 24, top: 300, right: 110 },
+      layout: { width: 80, height: 24, bottom: 20, right: 110 },
       theme: 'capsule',
       isDefault: YES,
       action: 'save',
@@ -274,7 +274,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
     }),
 
     cancelButton: SC.ButtonView.extend({
-      layout: { width: 80, height: 24, top: 300, right: 20 },
+      layout: { width: 80, height: 24, bottom: 20, right: 20 },
       theme: 'capsule',
       title: 'Cancel',
       action: 'cancel'

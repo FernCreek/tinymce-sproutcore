@@ -18,7 +18,7 @@
  * @extends SC.PanelPane
  */
 TinySC.InsertLinkPane = SC.PanelPane.extend({
-  layout: { width: 500, height: 200, centerX: 0, centerY: 0 },
+  layout: { width: 500, height: 202, centerX: 0, centerY: 0 },
   classNames: 'modalDialog'.w(),
 
   /**
@@ -110,7 +110,7 @@ TinySC.InsertLinkPane = SC.PanelPane.extend({
     }),
 
     saveButton: SC.ButtonView.extend({
-      layout: { width: 80, height: 24, top: 160, right: 110 },
+      layout: { width: 80, height: 24, bottom: 20, right: 110 },
       theme: 'capsule',
       isDefault: YES,
       action: 'save',
@@ -118,7 +118,7 @@ TinySC.InsertLinkPane = SC.PanelPane.extend({
     }),
 
     cancelButton: SC.ButtonView.extend({
-      layout: { width: 80, height: 24, top: 160, right: 20 },
+      layout: { width: 80, height: 24, bottom: 20, right: 20 },
       theme: 'capsule',
       title: 'Cancel',
       action: 'cancel'
