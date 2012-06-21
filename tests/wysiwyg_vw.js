@@ -54,13 +54,101 @@ describe('TinySC.WysiwygView', function() {
 
     expect(view.$('iframe')[0].contentDocument.hasFocus()).toBeTruthy();
   });
-  
+
+  it('should make the link bold', function() {
+    var view = pane.view('wysiwygView'),
+      ed = view.get('editor'),
+      $a,
+      dialog,
+      button;
+
+    view.set('value', testHtml);
+
+    ed.selection.select(ed.$('a')[0]);
+    ed.execCommand('bold', true);
+
+    dialog = SC.RootResponder.responder.get('keyPane');
+    expect(dialog).toBeShown();
+    SC.Binding.flushPendingChanges();
+
+    $a = ed.$('a');
+    expect($a.prop('href')).toEqual('http://www.google.com/');
+    expect($a.text()).toEqual('Google');
+    expect($a.parent().is('strong')).toBeTruthy();
+  });
+
+  it('should make the link italic', function() {
+    var view = pane.view('wysiwygView'),
+      ed = view.get('editor'),
+      $a,
+      dialog,
+      button;
+
+    view.set('value', testHtml);
+
+    ed.selection.select(ed.$('a')[0]);
+    ed.execCommand('italic', true);
+
+    dialog = SC.RootResponder.responder.get('keyPane');
+    expect(dialog).toBeShown();
+    SC.Binding.flushPendingChanges();
+
+    $a = ed.$('a');
+    expect($a.prop('href')).toEqual('http://www.google.com/');
+    expect($a.text()).toEqual('Google');
+    expect($a.parent().is('em')).toBeTruthy();
+  });
+
+  it('should make the link underlined', function() {
+    var view = pane.view('wysiwygView'),
+      ed = view.get('editor'),
+      $a,
+      dialog,
+      button;
+
+    view.set('value', testHtml);
+
+    ed.selection.select(ed.$('a')[0]);
+    ed.execCommand('underline', true);
+
+    dialog = SC.RootResponder.responder.get('keyPane');
+    expect(dialog).toBeShown();
+    SC.Binding.flushPendingChanges();
+
+    $a = ed.$('a');
+    expect($a.prop('href')).toEqual('http://www.google.com/');
+    expect($a.text()).toEqual('Google');
+    expect($a.parent().css('text-decoration')).toEqual('underline');
+  });
+
+  it('should make the link strikethrough', function() {
+    var view = pane.view('wysiwygView'),
+      ed = view.get('editor'),
+      $a,
+      dialog,
+      button;
+
+    view.set('value', testHtml);
+
+    ed.selection.select(ed.$('a')[0]);
+    ed.execCommand('strikethrough', true);
+
+    dialog = SC.RootResponder.responder.get('keyPane');
+    expect(dialog).toBeShown();
+    SC.Binding.flushPendingChanges();
+
+    $a = ed.$('a');
+    expect($a.prop('href')).toEqual('http://www.google.com/');
+    expect($a.text()).toEqual('Google');
+    expect($a.parent().css('text-decoration')).toEqual('line-through');
+  });
+
   it('should edit link', function() {
     var view = pane.view('wysiwygView'),
-        ed = view.get('editor'),
-        $a,
-        dialog,
-        button;
+      ed = view.get('editor'),
+      $a,
+      dialog,
+      button;
 
     view.set('value', testHtml);
 
@@ -85,6 +173,27 @@ describe('TinySC.WysiwygView', function() {
     expect($a.text()).toEqual('Slashdot');
   });
 
+  it('should remove link', function() {
+    var view = pane.view('wysiwygView'),
+      ed = view.get('editor'),
+      $a,
+      dialog,
+      button;
+
+    view.set('value', testHtml);
+
+    ed.selection.select(ed.$('a')[0]);
+    ed.execCommand('unlink', true);
+
+    dialog = SC.RootResponder.responder.get('keyPane');
+    expect(dialog).toBeShown();
+    SC.Binding.flushPendingChanges();
+
+    $a = ed.$("p:contains('Google')");
+    expect($a.prop('href')).toEqual(undefined);
+    expect($a.text()).toEqual('Google');
+  });
+
   it('should edit table', function() {
     var view = pane.view('wysiwygView'),
         ed = view.get('editor'),
@@ -104,7 +213,7 @@ describe('TinySC.WysiwygView', function() {
 
     expect(dialog.getPath('contentView.tableSizeView.rowsValueTextField.value')).toEqual(1);
     expect(dialog.getPath('contentView.tableSizeView.columnsValueTextField.value')).toEqual(1);
-    expect(dialog.getPath('contentView.tableOptionsView.contentView.widthValueTextField.value')).toEqual(29);
+    expect(dialog.getPath('contentView.tableOptionsView.contentView.widthValueTextField.value')).toEqual($(view.$('iframe')[0].contentDocument).find('.mceItemTable').outerWidth());
     expect(dialog.getPath('contentView.tableOptionsView.contentView.cellPaddingValueTextField.value')).toEqual(0);
     expect(dialog.getPath('contentView.tableOptionsView.contentView.cellSpacingValueTextField.value')).toEqual(0);
     expect(dialog.getPath('contentView.tableOptionsView.contentView.frameButton.value')).toEqual('off');
@@ -139,10 +248,10 @@ describe('TinySC.WysiwygView', function() {
 
   it('should edit image', function() {
     var view = pane.view('wysiwygView'),
-        ed = view.get('editor'),
-        $img,
-        dialog,
-        button;
+      ed = view.get('editor'),
+      $img,
+      dialog,
+      button;
 
     view.set('value', testHtml);
 
@@ -187,5 +296,34 @@ describe('TinySC.WysiwygView', function() {
     expect($img.attr('data-tinysc-original-height')).toEqual('200');
     expect($img.attr('data-tinysc-file-size')).toEqual('456789');
     expect($img.attr('data-tinysc-image-type')).toEqual('png');
+  });
+
+  it('should show/hide the popout editor', function() {
+    var view = pane.view('wysiwygView'),
+      ed = view.get('editor'),
+      $expDialog,
+      dialog,
+      button;
+
+    view.set('value', testHtml);
+
+    ed.execCommand('scOpenExpandedEditor', true);
+
+    dialog = SC.RootResponder.responder.get('keyPane');
+    expect(dialog).toBeShown();
+    SC.Binding.flushPendingChanges();
+
+    // Check that this is the expanded dialog
+    $expDialog = $('.modalDialog');
+    expect($expDialog.find('.dialogTitleLabel').text()).toEqual('Expanded Editor');
+
+    // Check that the expand dialog button is hidden from the user
+    expect($expDialog.find('.mce_expanded_editor').length).toEqual(0);
+    expect($expDialog.find('a .mce_code').length).toEqual(1);
+
+    // Close the dialog
+    button = dialog.getPath('contentView.closeButton');
+    SP.TestUtils.clickOn(button);
+    expect(dialog).not.toBeShown();
   });
 });
