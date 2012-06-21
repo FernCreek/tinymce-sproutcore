@@ -30,7 +30,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
 
   contentView: SC.View.extend({
     layout: { left: 0, right: 0, top: 0, bottom: 0 },
-    childViews: 'titleBar titleDivider imageView dimensionsView insertButton cancelButton'.w(),
+    childViews: 'titleBar titleDivider imageView dimensionsView saveButton cancelButton'.w(),
 
     titleBar: SC.View.extend({
       layout: { height: 42, top: 0 },
@@ -261,7 +261,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
       })
     }),
 
-    insertButton: SC.ButtonView.extend({
+    saveButton: SC.ButtonView.extend({
       layout: { width: 80, height: 24, bottom: 20, right: 110 },
       theme: 'capsule',
       isDefault: YES,
