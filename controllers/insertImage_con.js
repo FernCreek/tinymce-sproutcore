@@ -10,7 +10,7 @@
 //////////////////////////////////////////////////////////////////////////
 /*globals TinySC */
 
-sc_require('protocols/image_del');
+sc_require('delegates/image_del');
 
 /**
  * @class
