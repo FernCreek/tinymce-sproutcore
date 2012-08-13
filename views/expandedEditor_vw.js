@@ -65,14 +65,14 @@ TinySC.ExpandedEditorPane = SC.PanelPane.extend({
       layout: { width: 80, height: 24, right: 20, bottom: 10 },
       theme: 'capsule',
       title: 'Close',
-      action: 'save'
+      action: 'saveContents'
     })
   }),
 
   /**
    * Saves the expanded editor contents to the owner view and closes the dialog.
    */
-  save: function() {
+  saveContents: function() {
     var owner = this.get('owner'),
         wysiwygView = this.get('wysiwygView');
 
