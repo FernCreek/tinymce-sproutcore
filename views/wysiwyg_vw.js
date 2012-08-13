@@ -82,6 +82,24 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
   },
 
   /**
+   * Reloads the value into the WYSIWYG editor. This is solving a problem where the value of the
+   * editor was being set before the editor was actually displayed on the screen, so in the load()
+   * function above this.$textarea() was null, and therefore was never populated with a value.
+   */
+  reload: function() {
+    var ed = this.get('editor');
+    if (ed) {
+      if (this.get('value') !== undefined) {
+        // Set the textarea value if it is not already
+        if(this.$textarea().val() !== this.get('value')) {
+          this.$textarea().val(this.get('value'));
+        }
+      }
+      ed.load();
+    }
+  },
+
+  /**
    * Saves the TinyMCE editor's value into our value property.
    *
    * @param {Boolean} postProcess Were we called from post process.
@@ -205,6 +223,12 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
    * Adds the TinyMCE control when the view is appended to the document.
    */
   didAppendToDocument: function() {
+    // invokeLast so the editor is displayed in the DOM before calling the reload() function
+    var that = this;
+    this.invokeLast(function() {
+      that.reload();
+    });
+
     tinymce.execCommand('mceAddControl', true, this.get('editorID'));
   },
 
