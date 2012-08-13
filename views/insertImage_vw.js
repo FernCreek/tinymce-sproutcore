@@ -95,7 +95,7 @@ TinySC.InsertImagePane = SC.PanelPane.extend({
           init: function() {
             sc_super();
             this.set('formAction', TinySC.insertImageController.get('fileFieldFormAction'));
-            this.set('hiddenInputs', TinySC.insertImageController.get('hiddenInputs'));
+            this.set('hiddenInputs', TinySC.insertImageController.get('fileFieldHiddenInputs'));
           }
         }),
 
