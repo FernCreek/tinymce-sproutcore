@@ -94,6 +94,10 @@ TinySC.ExpandedEditorPane = SC.PanelPane.extend({
 
     if (owner && wysiwygView && titleLabel) {
       wysiwygView.set('value', owner.get('value'));
+      wysiwygView.set('entityType', owner.get('entityType'));
+      wysiwygView.set('entityID', owner.get('entityID'));
+      wysiwygView.set('fieldID', owner.get('fieldID'));
+      wysiwygView.set('reportedBy', owner.get('reportedBy'));
       title = owner.get('expandedEditorTitle');
       titleLabel.set('value', title ? title : 'Expanded Editor');
     }
