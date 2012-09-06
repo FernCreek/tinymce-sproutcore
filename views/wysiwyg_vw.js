@@ -341,5 +341,18 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
   willLoseFirstResponder: function(responder) {
     var $buttons = this.$toolbarButtons();
     $buttons.removeAttr('data-tinysc-focus');
-  }
+  },
+
+  /**
+   * Called when the isEnabled property changes. Used to make the editor read only if needed
+   */
+  isEnabledDidChange: function() {
+    var ed = this.get('editor'),
+        disabled = !this.get('isEnabled');
+
+    if(!SC.empty(ed)) {
+      ed.makeReadOnly(disabled);
+    }
+  }.observes('isEnabled')
+
 });
