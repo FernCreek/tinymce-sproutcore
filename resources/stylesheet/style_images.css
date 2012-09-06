@@ -1,0 +1,29 @@
+.table-align-center {
+   height: 16px;
+   width: 16px;
+   @include slice('../images/table_align_center.png');
+}
+
+.table-align-left {
+   height: 16px;
+   width: 16px;
+   @include slice('../images/table_align_left.png');
+}
+
+.table-align-right {
+   height: 16px;
+   width: 16px;
+   @include slice('../images/table_align_right.png');
+}
+
+.table-frame-off {
+   height: 16px;
+   width: 16px;
+   @include slice('../images/table_frame_off.png');
+}
+
+.table-frame-on {
+   height: 16px;
+   width: 16px;
+   @include slice('../images/table_frame_on.png');
+}

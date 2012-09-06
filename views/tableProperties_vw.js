@@ -169,11 +169,11 @@ TinySC.TablePropertiesPane = SC.PanelPane.extend({
           // TODO: Update icons.
           items: [
             {
-              icon: '/ttweb/images/btn_table_frame_on.gif',
+              icon: 'table-frame-on',
               value: 'on'
             },
             {
-              icon: '/ttweb/images/btn_table_frame_off.gif',
+              icon: 'table-frame-off',
               value: 'off'
             }
           ]
@@ -211,15 +211,15 @@ TinySC.TablePropertiesPane = SC.PanelPane.extend({
           // TODO: Update icons.
           items: [
             {
-              icon: '/ttweb/images/btn_table_align_left.gif',
+              icon: 'table-align-left',
               value: 'left'
             },
             {
-              icon: '/ttweb/images/btn_table_align_center.gif',
+              icon: 'table-align-center',
               value: 'center'
             },
             {
-              icon: '/ttweb/images/btn_table_align_right.gif',
+              icon: 'table-align-right',
               value: 'right'
             }
           ]
