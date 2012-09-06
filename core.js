@@ -323,8 +323,9 @@ tinymce.init({
   // Load our plugins, but ensure that TinyMCE does not try to load the JS files for them.
   plugins: '-paste,-table,-seapine,-sproutcore',
 
-  theme_advanced_buttons1: '', // buttons are set in setup, depending on type of editor
-  theme_advanced_buttons2: 'pastetext,removeformat,tablecontrols,delete_table',
+  // buttons are set in setup, depending on type of editor
+  theme_advanced_buttons1: '',
+  theme_advanced_buttons2: '',
   theme_advanced_buttons3: '',
   theme_advanced_toolbar_location: 'top',
   theme_advanced_toolbar_align: 'left',
@@ -347,15 +348,17 @@ tinymce.init({
    */
   setup: function(ed) {
     var view = TinySC.Utils.getOwnerView(ed),
-        normalEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,expanded_editor,code',
-        expandedEditorToolbarButtons = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,code',
         onKey = (SC.browser.name === SC.BROWSER.firefox) ? ed.onKeyPress : ed.onKeyDown;
 
     // Handle settings the toolbar buttons depending on whether we are expanded or not.
     if (view && view.get('isExpanded')) {
-      ed.settings.theme_advanced_buttons1 = expandedEditorToolbarButtons;
+      ed.settings.theme_advanced_buttons1 = 'bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,fontselect,fontsizeselect,|,forecolor,backcolor,|,bullist,numlist,|,link,unlink,image,|,hr,|,table,|,code';
+      ed.settings.theme_advanced_buttons2 = 'pastetext,removeformat,tablecontrols,delete_table';
+      ed.settings.theme_advanced_toolbar_location = 'top';
     } else {
-      ed.settings.theme_advanced_buttons1 = normalEditorToolbarButtons;
+      ed.settings.theme_advanced_buttons1 = '';
+      ed.settings.theme_advanced_buttons2 = ''
+      ed.settings.theme_advanced_toolbar_location = 'none';
     }
 
     // Handle updating the value property on the WysiwygView associated with this editor.
