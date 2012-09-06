@@ -330,6 +330,7 @@ tinymce.init({
   theme_advanced_toolbar_align: 'left',
   // Override the set of available fonts.
   theme_advanced_fonts: "Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva",
+  font_size_style_values: '8pt, 10pt, 12pt, 14pt, 18pt, 24pt, 36pt',
 
   paste_retain_style_properties: 'font-family,font-size,font-weight,font-style,color,background-color,text-align',
   paste_convert_middot_lists: false,
