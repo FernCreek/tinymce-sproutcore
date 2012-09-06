@@ -385,9 +385,36 @@ tinymce.init({
     // This is in place to force focus to the first control in the focus chain
     // if the editor area gets focus while the WYSIWYG control is not firstResponder.
     ed.onInit.add(function(ed, evt) {
+
       tinymce.dom.Event.add(ed.getWin(), 'focus', function(evt) {
         TinySC.Callbacks.preventBrowserFocus(ed, evt);
       });
+
+      // Intercept the blur event so we know when an editor loses focus
+      tinymce.dom.Event.add(ed.getWin(), 'blur', function(e) {
+        var controller = ed.getParam('toolbar_controller');
+        if(!SC.empty(controller)) {
+          controller.blur();
+        }
+      });
+
+      // Intercept the focus event so we know when an editor gains focus
+      tinymce.dom.Event.add(ed.getWin(), 'focus', function(e) {
+        var controller = ed.getParam('toolbar_controller');
+        if(!SC.empty(controller)) {
+          controller.focus();
+        }
+      });
+
+    });
+
+    // Add a callback to onNodeChange so we know when the editor cursor moves
+    ed.onNodeChange.add(function(ed, cm, e) {
+      var controller = ed.getParam('toolbar_controller');
+      if(!SC.empty(controller)) {
+        controller.nodeChange(ed, cm, e);
+      }
+
     });
   }
 });
