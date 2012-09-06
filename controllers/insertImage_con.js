@@ -372,7 +372,7 @@ TinySC.insertImageController = SC.Object.create(SC.DelegateSupport, TinySC.Image
    */
   fileFieldFormAction: function() {
     return this.getDelegateProperty('formAction', this.get('delegate'));
-  }.property('delegate').cacheable(),
+  }.property('delegate'),
 
   /**
    * Gets the hidden inputs from the delegate.
@@ -381,7 +381,7 @@ TinySC.insertImageController = SC.Object.create(SC.DelegateSupport, TinySC.Image
    */
   fileFieldHiddenInputs: function() {
     return this.getDelegateProperty('hiddenInputs', this.get('delegate'));
-  }.property('delegate').cacheable(),
+  }.property('delegate'),
 
   /**
    * Gets the image src string from the delegate.
