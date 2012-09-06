@@ -78,6 +78,10 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
         this.$textarea().val(value);
       }
       ed.load();
+
+      // Clear the undo stack first, then start a new level AFTER the text has been set
+      ed.undoManager.clear();
+      ed.execCommand('mceAddUndoLevel');
     }
   },
 
@@ -96,6 +100,10 @@ TinySC.WysiwygView = SC.View.extend(SC.DelegateSupport, TinySC.PasteDelegate, {
         }
       }
       ed.load();
+
+      // Clear the undo stack first, then start a new level AFTER the text has been set
+      ed.undoManager.clear();
+      ed.execCommand('mceAddUndoLevel');
     }
   },
 
